@@ -87,7 +87,7 @@ public sealed partial class MinesweeperWindow : DefaultWindow
                 return;
 
             if (_maxRestarts >= 0 && _restartsRemaining <= 0)
-            return;
+                return;
 
             if (_restartsRemaining > 0)
             {
@@ -767,10 +767,10 @@ public sealed partial class MinesweeperWindow : DefaultWindow
 
         if (!_debugBypassMinigameRequirements && _playerIntelligence < _requiredIntelligence)
         {
-            var intelligenceDeficit = 11 - _playerIntelligence;
-            var misfireChance = intelligenceDeficit * 5;
+            var intelligenceDeficit = _requiredIntelligence - _playerIntelligence;
+            var misfireChance = intelligenceDeficit * (10f / 3f);
             StatusLabel.Text =
-                Loc.GetString("magic-scroll-minesweeper-objective-misfire", ("chance", misfireChance));
+                Loc.GetString("magic-scroll-minesweeper-objective-misfire", ("chance", MathF.Round(misfireChance, 1)));
             StatusLabel.Modulate = Color.Yellow;
         }
         else if (_isUnstable && _minimumMoveDelaySeconds > 0)
