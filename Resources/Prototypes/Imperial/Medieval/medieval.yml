@@ -4427,6 +4427,7 @@
   components:
   - type: ActivatableUI
     key: enum.MagicScrollUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
       enum.MagicScrollUiKey.Key:
@@ -4463,6 +4464,7 @@
   components:
   - type: ActivatableUI
     key: enum.MagicScrollUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
       enum.MagicScrollUiKey.Key:
@@ -4495,6 +4497,7 @@
   components:
   - type: ActivatableUI
     key: enum.MagicScrollUiKey.Key
+    singleUser: true
   - type: UserInterface
     interfaces:
       enum.MagicScrollUiKey.Key:
@@ -4542,6 +4545,7 @@
   - type: ActivatableUI
     key: enum.MagicScrollUiKey.Key
     inHandsOnly: true
+    singleUser: true
   - type: UserInterface
     interfaces:
       enum.MagicScrollUiKey.Key:
