@@ -34,6 +34,8 @@ public sealed class MagicScrollBoundUserInterfaceState(
     int tipsAvailable,
     int maxRestarts,
     List<int> pairRestartsRemaining,
+    List<int> unstablePairGridSizes,
+    List<int> unstablePairMineCounts,
     bool isPractice,
     bool isUnstable,
     bool debugBypassMinigameRequirements) : BoundUserInterfaceState
@@ -54,6 +56,8 @@ public sealed class MagicScrollBoundUserInterfaceState(
     public int TipsAvailable = tipsAvailable;
     public int MaxRestarts = maxRestarts;
     public List<int> PairRestartsRemaining = pairRestartsRemaining;
+    public List<int> UnstablePairGridSizes = unstablePairGridSizes;
+    public List<int> UnstablePairMineCounts = unstablePairMineCounts;
     public bool IsPractice = isPractice;
     public bool IsUnstable = isUnstable;
     public bool DebugBypassMinigameRequirements = debugBypassMinigameRequirements;

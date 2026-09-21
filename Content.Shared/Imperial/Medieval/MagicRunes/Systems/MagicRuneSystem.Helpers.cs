@@ -48,6 +48,8 @@ public partial class MagicRuneSystem
     public void InitializeScroll(EntityUid uid, MagicScrollComponent scroll)
     {
         scroll.PairRestartsRemaining.Clear();
+        scroll.UnstablePairGridSizes.Clear();
+        scroll.UnstablePairMineCounts.Clear();
         scroll.EncryptedRunes.Clear();
         scroll.DecodedRunes.Clear();
         scroll.EncryptedPairs.Clear();
@@ -70,6 +72,13 @@ public partial class MagicRuneSystem
                 scroll.EncryptedRunes.Add(pair.Second);
 
                 scroll.PairRestartsRemaining.Add(scroll.MaxRestarts);
+
+                if (scroll.IsUnstable)
+                {
+                    scroll.UnstablePairGridSizes.Add(WeightedChoice(UnstableGridSizes, UnstableGridWeights));
+
+                    scroll.UnstablePairMineCounts.Add(WeightedChoice(UnstableMineCounts, UnstableMineWeights));
+                }
             }
         }
         else
@@ -87,28 +96,13 @@ public partial class MagicRuneSystem
 
     private void RandomizeUnstableScrollSettings(MagicScrollComponent scroll)
     {
-        scroll.GridSize = WeightedChoice(
-        UnstableGridSizes,
-        UnstableGridWeights);
-
-        scroll.TotalMines = WeightedChoice(
-        UnstableMineCounts,
-    UnstableMineWeights);
-
         scroll.TipsAvailable = _random.Next(1, 6);
 
-        // 2 and 8 are both outliers. The middle number of pairs is much more likely.
-        scroll.MaxEncryptedPairs = WeightedChoice(
-    UnstablePairCounts,
-    UnstablePairWeights);
+        scroll.MaxEncryptedPairs = WeightedChoice(UnstablePairCounts, UnstablePairWeights);
 
-        scroll.BasicPower = WeightedChoice(
-    UnstableBasicPowerValues,
-    UnstableBasicPowerWeights);
+        scroll.BasicPower = WeightedChoice(UnstableBasicPowerValues, UnstableBasicPowerWeights);
 
-        scroll.PowerPerSolvedPair = WeightedChoice(
-    UnstablePairPowerValues,
-    UnstablePairPowerWeights);
+        scroll.PowerPerSolvedPair = WeightedChoice(UnstablePairPowerValues, UnstablePairPowerWeights);
     }
 
     private int WeightedChoice(int[] values, int[] weights)

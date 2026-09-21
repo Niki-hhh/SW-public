@@ -325,6 +325,21 @@ public sealed partial class MagicScrollWindow : DefaultWindow
             _currentState.PairRestartsRemaining[pairIndex];
         }
 
+        if (_currentState == null)
+            return;
+
+        var gridSize = _currentState.GridSize;
+        var totalMines = _currentState.TotalMines;
+
+        if (_currentState.IsUnstable &&
+            pairIndex >= 0 &&
+            pairIndex < _currentState.UnstablePairGridSizes.Count &&
+            pairIndex < _currentState.UnstablePairMineCounts.Count)
+        {
+            gridSize = _currentState.UnstablePairGridSizes[pairIndex];
+            totalMines = _currentState.UnstablePairMineCounts[pairIndex];
+        }
+
         _minesweeperWindow = new MinesweeperWindow();
 
         _minesweeperWindow.GameStarted += () =>
@@ -357,8 +372,8 @@ public sealed partial class MagicScrollWindow : DefaultWindow
             pair,
             _currentState?.PlayerIntelligence ?? 10,
             _currentState?.RequiredIntelligence ?? 12,
-            _currentState?.GridSize ?? 9,
-            _currentState?.TotalMines ?? 9,
+            gridSize,
+            totalMines,
             _currentState?.MoveTimeSeconds ?? 30,
             _currentState?.MinimumMoveDelaySeconds ?? 0,
             _currentState?.TipsAvailable ?? 3,

@@ -74,7 +74,12 @@ public sealed partial class MagicScrollComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public List<int> PairRestartsRemaining = new();
 
-    // For pair-based scrolls this value is awarded once per solved pair.
+    [ViewVariables(VVAccess.ReadWrite)]
+    public List<int> UnstablePairGridSizes = new();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public List<int> UnstablePairMineCounts = new();
+
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public int PowerPerSolvedPair;
 

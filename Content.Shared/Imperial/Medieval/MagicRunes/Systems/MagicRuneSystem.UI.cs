@@ -228,6 +228,8 @@ public partial class MagicRuneSystem
             tipsAvailable: scroll.TipsAvailable,
             maxRestarts: scroll.MaxRestarts,
             pairRestartsRemaining: scroll.PairRestartsRemaining,
+            unstablePairGridSizes: scroll.UnstablePairGridSizes,
+            unstablePairMineCounts: scroll.UnstablePairMineCounts,
             isPractice: scroll.IsPractice,
             isUnstable: scroll.IsUnstable,
             debugBypassMinigameRequirements: scroll.DebugBypassMinigameRequirements
