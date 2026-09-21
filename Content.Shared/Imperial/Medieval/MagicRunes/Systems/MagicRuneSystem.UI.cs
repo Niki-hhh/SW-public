@@ -251,6 +251,11 @@ public partial class MagicRuneSystem
 
         var reward = _rewards[_random.Next(_rewards.Length)];
 
+        while (component.IsPractice && reward.Id == "MagicMedievalDarkness")
+        {
+            reward = _rewards[_random.Next(_rewards.Length)];
+        }
+
         var baseCount = _random.Next(reward.Min, reward.Max + 1);
 
         int count;
