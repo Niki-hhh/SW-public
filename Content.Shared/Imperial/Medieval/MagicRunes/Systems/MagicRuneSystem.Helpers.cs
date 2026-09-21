@@ -16,13 +16,13 @@ public partial class MagicRuneSystem
 {
 
     private static readonly int[] UnstableGridSizes =
-    [6, 9, 10, 12, 14, 16];
+    [9, 10, 11, 12, 14, 16];
 
     private static readonly int[] UnstableGridWeights =
     [2, 5, 7, 9, 11, 12];
 
     private static readonly int[] UnstableMineCounts =
-    [11, 12, 13, 14, 15, 16, 18, 20, 24];
+    [11, 13, 14, 15, 16, 18, 20, 22, 24];
 
     private static readonly int[] UnstableMineWeights =
     [6, 6, 9, 9, 13, 13, 27, 27, 34];
