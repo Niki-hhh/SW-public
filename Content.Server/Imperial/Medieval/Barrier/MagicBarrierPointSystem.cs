@@ -366,7 +366,7 @@ namespace Content.Server.MagicBarrier
 
                     if (comp.Stability <= 100f && comp.Stability > 50f)
                     {
-                        _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-hm-barrier-lowstab"), playSound: false, colorOverride: Color.GreenYellow, sender: Loc.GetString("magic-barrier-announcement-sender"));
+                        _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-hm-barrier-lowstab"), playSound: false, colorOverride: Color.GreenYellow, sender: Loc.GetString("medieval-magic-barrier-announcement-sender"));
                     }
                     if (comp.Stability <= 50f)
                     {
@@ -408,7 +408,7 @@ namespace Content.Server.MagicBarrier
                             var cursexform = Transform(choosenSpawner.Owner);
                             var cursecoords = cursexform.Coordinates;
                             Spawn("MedievalBarrierCurse", cursecoords);
-                            _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-hm-barrier-drain-increased"), playSound: false, colorOverride: Color.DeepPink, sender: Loc.GetString("magic-barrier-announcement-sender"));
+                            _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-hm-barrier-drain-increased"), playSound: false, colorOverride: Color.DeepPink, sender: Loc.GetString("medieval-magic-barrier-announcement-sender"));
                             Spawn("ShockWaveEffect", cursecoords);
                             Spawn("ShockWaveEffect", coords);
                         }
@@ -482,7 +482,7 @@ namespace Content.Server.MagicBarrier
                 if (TryComp<MagicBarrierRiftComponent>(rift, out var riftComponent))
                     riftComponent.Spawner = chosenSpawner.Owner;
                 chosenSpawner.Occupied = true;
-                _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-magic-barrier-rift-opened"), playSound: false, colorOverride: Color.DeepSkyBlue, sender: Loc.GetString("magic-barrier-announcement-sender"));
+                _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-magic-barrier-rift-opened"), playSound: false, colorOverride: Color.DeepSkyBlue, sender: Loc.GetString("medieval-magic-barrier-announcement-sender"));
                 Spawn("ShockWaveEffect", riftCoords);
                 return;
             }
@@ -572,7 +572,7 @@ namespace Content.Server.MagicBarrier
                 barrier.Stability += 4f;
             }
 
-            _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-magic-barrier-rift-destroyed"), playSound: false, colorOverride: Color.LimeGreen, sender: Loc.GetString("magic-barrier-announcement-sender"));
+            _chat.DispatchGlobalAnnouncement(Loc.GetString("medieval-magic-barrier-rift-destroyed"), playSound: false, colorOverride: Color.LimeGreen, sender: Loc.GetString("medieval-magic-barrier-announcement-sender"));
         }
     }
 

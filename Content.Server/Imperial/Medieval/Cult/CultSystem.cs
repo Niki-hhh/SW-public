@@ -433,7 +433,7 @@ namespace Content.Server.Cult
                         }
                         Spawn("ShockWaveEffect", coords);
                         _audioSystem.PlayPvs(comp.SuccesSound, uid);
-                        _chat.TrySendInGameICMessage(uid, "Ритуал повреждения барьера выполнен успешно, его стабильность снижена на треть от текущей", InGameICChatType.Speak, false);
+                        _chat.TrySendInGameICMessage(uid, Loc.GetString("cult-ritual-barrier-damaged"), InGameICChatType.Speak, false);
                     }
                     break;
                 case "key":
