@@ -143,7 +143,7 @@ public partial class MagicRuneSystem
         SendScrollState(uid, component, knowledge, args.Actor);
         Dirty(uid, component);
 
-        GetPlayerEssence(args.Actor, component);
+        GetPlayerEssence(args.Actor, component, pairIndex);
     }
 
     private void OnScrollExplosion(EntityUid uid, MagicScrollComponent component, MagicScrollExplosionMessage args)
@@ -243,13 +243,16 @@ public partial class MagicRuneSystem
         return scroll.DebugBypassMinigameRequirements ? 10 : GetIntelligence(user);
     }
 
-    private void GetPlayerEssence(EntityUid user, MagicScrollComponent component)
+    private void GetPlayerEssence(EntityUid user, MagicScrollComponent component, int pairIndex = -1)
     {
         if (_net.IsClient)
             return;
 
         if (_rewards.Length == 0)
             return;
+
+        (string Id, string Effect, int Min, int Max)? secondReward = null;
+        var secondCount = 0;
 
         var reward = _rewards[_random.Next(_rewards.Length)];
 
@@ -268,8 +271,24 @@ public partial class MagicRuneSystem
         }
         else if (component.IsUnstable)
         {
+            var gridSize = component.UnstablePairGridSizes[pairIndex];
+            var mineCount = component.UnstablePairMineCounts[pairIndex];
             var multiplier = _random.NextFloat(2f, 3f);
             count = (int)MathF.Round(baseCount * multiplier);
+            var secondEssenceChance = CalculateUnstableSecondEssenceChance(gridSize, mineCount);
+
+            if (_random.NextFloat() < secondEssenceChance)
+            {
+                var secondRewardPool = _rewards.Where(otherReward => otherReward.Id != reward.Id).ToArray();
+
+                secondReward = secondRewardPool[_random.Next(secondRewardPool.Length)];
+
+                var secondBaseCount = _random.Next(secondReward.Value.Min, secondReward.Value.Max + 1);
+
+                var secondMultiplier = _random.NextFloat(2f, 3f);
+
+                secondCount = (int)MathF.Round(secondBaseCount * secondMultiplier);
+            }
         }
         else if (component.RequiresRunePairs)
         {
@@ -286,6 +305,29 @@ public partial class MagicRuneSystem
         _stacks.SetCount(essence, count);
 
         Spawn(reward.Effect, coords);
+
+        if (secondReward != null)
+        {
+            var secondEssence = Spawn(secondReward.Value.Id, coords);
+            _stacks.SetCount(secondEssence, secondCount);
+            Spawn(secondReward.Value.Effect, coords);
+        }
+    }
+
+    private static float CalculateUnstableSecondEssenceChance(int gridSize, int mineCount)
+    {
+        const int minGridSize = 9;
+        const int maxGridSize = 16;
+        const int minMineCount = 11;
+        const int maxMineCount = 24;
+
+        var sizeDifficulty = (maxGridSize - gridSize) / (float)(maxGridSize - minGridSize);
+
+        var mineDifficulty = (mineCount - minMineCount) / (float)(maxMineCount - minMineCount);
+
+        var difficulty = (sizeDifficulty + mineDifficulty) / 2f;
+
+        return Math.Clamp(difficulty * 0.75f, 0f, 0.75f);
     }
 
     private void OnMinigameStarted(
