@@ -1763,7 +1763,7 @@
     soundSwing:
       path: /Audio/Imperial/Medieval/spear_swing.ogg
   - type: MedievalMeleeResource
-    resourceWaste: 0.7
+    resourceWaste: 0.4
   - type: Item
     size: Huge
   - type: Clothing
@@ -1860,7 +1860,7 @@
     soundSwing:
       path: /Audio/Imperial/Medieval/spear_swing.ogg
   - type: MedievalMeleeResource
-    resourceWaste: 0.7
+    resourceWaste: 0.4
   - type: Clothing
     quickEquip: false
     slots:
@@ -3419,7 +3419,7 @@
     soundSwing:
       path: /Audio/Imperial/Medieval/spear_swing.ogg
   - type: MedievalMeleeResource
-    resourceWaste: 0.75
+    resourceWaste: 0.4
   - type: Item
     size: Huge
   - type: Clothing
@@ -5417,7 +5417,7 @@
   - type: APDamageOnThrow
     damage:
       types:
-        Piercing: 8
+        Piercing: 5
   #- type: EmbeddableProjectile
     #offset: 0.15,0.15
   - type: ThrowingAngle
@@ -5489,7 +5489,7 @@
   - type: APDamageOnThrow
     damage:
       types:
-        Piercing: 8
+        Piercing: 5
   #- type: EmbeddableProjectile
     #offset: 0.15,0.15
   - type: ThrowingAngle
