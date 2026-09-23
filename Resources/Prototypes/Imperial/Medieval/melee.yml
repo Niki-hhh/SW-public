@@ -5412,7 +5412,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 50
+        Piercing: 37
         Blunt: 3
   - type: APDamageOnThrow
     damage:
@@ -5484,7 +5484,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: 50
+        Piercing: 37
         Blunt: 3
   - type: APDamageOnThrow
     damage:
