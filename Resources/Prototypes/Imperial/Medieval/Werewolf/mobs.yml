@@ -50,7 +50,7 @@
   - type: APDamageOnHit
     damage:
       types:
-      slash: 2
+        Slash: 2
   - type: Puller
   - type: Tag
     tags:

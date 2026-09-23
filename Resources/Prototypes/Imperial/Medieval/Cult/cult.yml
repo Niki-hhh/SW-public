@@ -732,7 +732,7 @@
     animation: CP14WeaponArcThrust
     wideAnimation: CP14WeaponArcSlash
     cPSwingBeverage: false
-    angle: 120
+    angle: -120
     cPAnimationOffset: 1
     clickDamageModifier: 1.22
     wideAnimationRotation: -140
