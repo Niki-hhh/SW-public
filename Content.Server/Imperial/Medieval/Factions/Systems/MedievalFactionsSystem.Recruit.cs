@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Server.EUI;
 using Content.Server.Imperial.Medieval.Factions.Components;
 using Content.Server.Imperial.Medieval.Factions.Recruit;
+using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Imperial.Medieval.Factions;
 using Content.Shared.Imperial.Medieval.Factions.Components;
@@ -81,6 +83,9 @@ public sealed partial class MedievalFactionsSystem
 
         _euiManager.OpenEui(new RecruitOfferEui(this, target, recruiter, faction, recruiterName, factionName), session);
 
+        _adminLogger.Add(LogType.MedievalFactionRecruit, LogImpact.Low,
+            $"Leader {ToPrettyString(recruiter):recruiter} of faction {factionName:faction} offered recruitment to {ToPrettyString(target):target}");
+
         _popup.PopupEntity(Loc.GetString("medieval-recruit-offer-sent", ("target", Name(target))), recruiter, recruiter);
     }
 
@@ -95,6 +100,8 @@ public sealed partial class MedievalFactionsSystem
         if (!Exists(recruiter) || !TryComp<MedievalFactionMemberComponent>(recruiter, out var leader) ||
             leader.MenuAccess != FactionMenuAccess.Full || leader.Faction != faction)
         {
+            _adminLogger.Add(LogType.MedievalFactionRecruit, LogImpact.Low,
+                $"{ToPrettyString(target):target} accepted a recruitment offer to faction {factionProto.Name:faction} but it was no longer valid (recruiter {ToPrettyString(recruiter):recruiter} is gone or lost leader access)");
             _popup.PopupEntity(Loc.GetString("medieval-recruit-offer-expired"), target, target);
             return;
         }
@@ -126,12 +133,21 @@ public sealed partial class MedievalFactionsSystem
 
         RemComp<RecruitCooldownComponent>(target);
 
+        var granted = string.Join(", ", new[] { factionProto.RecruitCrystal, factionProto.RecruitKey, factionProto.RecruitCloak }
+            .Where(item => item != null)
+            .Select(item => item!.Value.Id));
+        _adminLogger.Add(LogType.MedievalFactionRecruit, LogImpact.Medium,
+            $"{ToPrettyString(target):target} accepted recruitment by leader {ToPrettyString(recruiter):recruiter} and joined faction {factionProto.Name:faction} as {factionProto.RecruitJob.Value.Id:job}. Items granted: {(granted.Length > 0 ? granted : "none"):items}");
+
         _popup.PopupEntity(Loc.GetString("medieval-recruit-accepted-target", ("faction", factionProto.Name)), target, target, Shared.Popups.PopupType.Medium);
         _popup.PopupEntity(Loc.GetString("medieval-recruit-accepted-leader", ("target", Name(target))), recruiter, recruiter, Shared.Popups.PopupType.Medium);
     }
 
     public void DeclineRecruitOffer(EntityUid target, EntityUid recruiter, ProtoId<MedievalFactionPrototype> faction)
     {
+        _adminLogger.Add(LogType.MedievalFactionRecruit, LogImpact.Low,
+            $"{ToPrettyString(target):target} declined recruitment by leader {ToPrettyString(recruiter):recruiter} to faction {Proto.Index(faction).Name:faction}");
+
         if (Exists(recruiter))
             _popup.PopupEntity(Loc.GetString("medieval-recruit-declined-leader", ("target", Name(target))), recruiter, recruiter);
     }
